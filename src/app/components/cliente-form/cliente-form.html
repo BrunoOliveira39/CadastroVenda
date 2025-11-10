@@ -1,0 +1,115 @@
+<h2>{{ isEdit ? 'Editar' : 'Novo' }} Cliente</h2>
+
+<form (ngSubmit)="onSubmit()">
+
+    <div>
+        <label for="nomecliente">Nome:</label>
+        <input type="text" id="nomecliente" [(ngModel)]="clienteForm.nomecliente" name="nomecliente" required>
+    </div>
+    <div>
+        <label for="cpf">CPF:</label>
+        <input type="text" id="cpf" [(ngModel)]="clienteForm.cpf" name="cpf" required>
+    </div>
+    <div>
+        <label for="datanasc">Data de Nascimento:</label>
+        <input type="date" id="datanasc" [(ngModel)]="clienteForm.datanasc" name="datanasc" required>
+    </div>
+    <div>
+        <label for="numerocasa">Número da Casa:</label>
+        <input type="text" id="numerocasa" [(ngModel)]="clienteForm.numerocasa" name="numerocasa" required>
+    </div>
+
+    <div>
+        <label for="sexo">Sexo:</label>
+        <select id="sexo" [(ngModel)]="clienteForm.sexo.codsexo" name="sexo" required>
+            <option value="0" disabled>Selecione</option>
+            <option *ngFor="let sexo of sexos" [value]="sexo.codsexo">
+                {{ sexo.nomesexo }}
+            </option>
+        </select>
+    </div>
+    
+    <div>
+        <label for="cidade">Cidade:</label>
+        <select id="cidade" [(ngModel)]="clienteForm.cidade.codcidade" name="cidade" required>
+            <option value="0" disabled>Selecione</option>
+            <option *ngFor="let cidade of cidades" [value]="cidade.codcidade">
+                {{ cidade.nomecidade }}
+            </option>
+        </select>
+    </div>
+    
+    <div>
+        <label for="cep">CEP:</label>
+        <div *ngIf="!isAddingCep" class="dropdown-com-botao">
+            <select id="cep" [(ngModel)]="clienteForm.cep.codcep" name="cep" required>
+                <option value="0" disabled>Selecione</option>
+                <option *ngFor="let cep of ceps" [value]="cep.codcep">
+                    {{ cep.numerocep }}
+                </option>
+            </select>
+            <button (click)="showAddCepForm()" type="button" class="btn btn-primary">+</button>
+        </div>
+        <div *ngIf="isAddingCep" class="inline-form">
+            <input 
+              type="text" 
+              [(ngModel)]="newCepNumber" 
+              name="newCepNumber" 
+              placeholder="Novo CEP (ex: 12345-678)"
+              (keyup.enter)="onSaveNewCep()"
+            >
+            <button (click)="onSaveNewCep()" type="button" class="btn btn-primary">Salvar</button>
+            <button (click)="cancelAddCep()" type="button" class="btn btn-cancel">Cancelar</button>
+        </div>
+    </div>
+    <div>
+        <label for="bairro">Bairro:</label>
+        <div *ngIf="!isAddingBairro" class="dropdown-com-botao">
+            <select id="bairro" [(ngModel)]="clienteForm.bairro.codbairro" name="bairro" required>
+                <option value="0" disabled>Selecione</option>
+                <option *ngFor="let bairro of bairros" [value]="bairro.codbairro">
+                    {{ bairro.nomebairro }}
+                </option>
+            </select>
+            <button (click)="showAddBairroForm()" type="button" class="btn btn-primary">+</button>
+        </div>
+        <div *ngIf="isAddingBairro" class="inline-form">
+            <input 
+              type="text" 
+              [(ngModel)]="newBairroName" 
+              name="newBairroName" 
+              placeholder="Nome do novo bairro"
+              (keyup.enter)="onSaveNewBairro()"
+            >
+            <button (click)="onSaveNewBairro()" type="button" class="btn btn-primary">Salvar</button>
+            <button (click)="cancelAddBairro()" type="button" class="btn btn-cancel">Cancelar</button>
+        </div>
+    </div>
+    <div>
+        <label for="rua">Rua:</label>
+        <div *ngIf="!isAddingRua" class="dropdown-com-botao">
+            <select id="rua" [(ngModel)]="clienteForm.rua.codrua" name="rua" required>
+                <option value="0" disabled>Selecione</option>
+                <option *ngFor="let rua of ruas" [value]="rua.codrua">
+                    {{ rua.nomerua }}
+                </option>
+            </select>
+            <button (click)="showAddRuaForm()" type="button" class="btn btn-primary">+</button>
+        </div>
+        <div *ngIf="isAddingRua" class="inline-form">
+            <input 
+              type="text" 
+              [(ngModel)]="newRuaName" 
+              name="newRuaName" 
+              placeholder="Nome da nova rua"
+              (keyup.enter)="onSaveNewRua()"
+            >
+            <button (click)="onSaveNewRua()" type="button" class="btn btn-primary">Salvar</button>
+            <button (click)="cancelAddRua()" type="button" class="btn btn-cancel">Cancelar</button>
+        </div>
+    </div>
+    
+    <button type="submit">{{ isEdit ? 'Atualizar' : 'Salvar' }}</button>
+    <a routerLink="/clientes" class="btn btn-cancel">Cancelar</a>
+    
+</form>

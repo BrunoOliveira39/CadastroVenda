@@ -1,0 +1,69 @@
+<h2>Nova Venda</h2>
+
+<form #Form="ngForm">
+    <div class="form-container">
+
+        <div class="form-section">
+            <h3>1. Selecione o Cliente</h3>
+            <select [(ngModel)]="clienteIdSelecionado" name="clienteId" required>
+                <option value="0" disabled>Selecione um Cliente</option>
+                <option *ngFor="let cliente of clientes" [value]="cliente.codcliente">
+                    {{ cliente.nomecliente }} (CPF: {{ cliente.cpf }})
+                </option>
+            </select>
+        </div>
+
+        <div class="form-section">
+            <h3>2. Adicione Produtos</h3>
+            <div>
+                <label for="produto">Produto:</label>
+                <select [(ngModel)]="produtoIdSelecionado" name="produtoId">
+                    <option value="0" disabled>Selecione um Produto</option>
+                    <option *ngFor="let produto of produtos" [value]="produto.codproduto">
+                        {{ produto.nomeproduto }} (Estoque: {{ produto.quantidade }})
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" [(ngModel)]="quantidadeItem" name="quantidade" min="1">
+            </div>
+
+            <button (click)="adicionarItem()" type="button" class="btn btn-primary">Adicionar Item</button>
+        </div>
+
+        <div class="form-section">
+            <h3>3. Itens da Venda</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>PRODUTO</th>
+                        <th>QUANTIDADE</th>
+                        <th>AÇÕES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of itensParaVenda">
+                        <td>{{ produtosAdicionadosMap.get(item.produtoId) }}</td>
+                        <td>{{ item.quantidade }}</td>
+                        <td>
+                            <button (click)="removerItem(item.produtoId)" type="button" class="btn btn-delete">
+                                Remover
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="itensParaVenda.length === 0">
+                        <td colspan="3">Nenhum item adicionado.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-actions">
+
+            <button (click)="onSubmit()" type="button" class="btn btn-primary">Salvar Venda</button>
+
+            <a routerLink="/vendas" class="btn btn-cancel">Cancelar</a>
+        </div>
+    </div>
+</form>

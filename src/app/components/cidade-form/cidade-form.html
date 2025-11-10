@@ -1,0 +1,30 @@
+<h2>{{ isEdit ? 'Editar' : 'Nova' }} Cidade</h2>
+
+<div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+</div>
+
+<form (ngSubmit)="onSubmit()" #form="ngForm">
+    <div>
+        <label for="nomecidade">Nome da Cidade:</label>
+        <input type="text" id="nomecidade" [(ngModel)]="cidadeForm.nomecidade" name="nomecidade" required>
+    </div>
+
+    <div>
+        <label for="uf">UF:</label>
+        <select id="uf" [(ngModel)]="cidadeForm.nomeuf" name="nomeuf" required>
+            <option value="" disabled>Selecione uma UF</option>
+            <option *ngFor="let uf of ufs" [value]="uf.nomeuf">
+                {{ uf.sigla }} - {{ uf.nomeuf }}
+            </option>
+        </select>
+    </div>
+
+    <button type="submit" [disabled]="!form.valid || successMessage">
+        {{ isEdit ? 'Atualizar' : 'Salvar' }}
+    </button>
+    <a routerLink="/cidades" class="btn btn-cancel">Cancelar</a>
+</form>

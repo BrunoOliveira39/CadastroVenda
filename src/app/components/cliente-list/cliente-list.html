@@ -1,0 +1,28 @@
+<h2>Lista de Clientes</h2>
+<a routerLink="/clientes/novo" class="btn btn-primary">Novo Cliente</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Cód.</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Cidade</th>
+            <th>Bairro</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let cliente of clientes">
+            <td>{{ cliente.codcliente }}</td>
+            <td>{{ cliente.nomecliente }}</td>
+            <td>{{ cliente.cpf }}</td>
+            <td>{{ cliente.cidade?.nomecidade }}</td>
+            <td>{{ cliente.bairro?.nomebairro }}</td>
+            <td>
+                <a [routerLink]="['/clientes/editar', cliente.codcliente]" class="btn btn-edit">Editar</a>
+                <button (click)="deleteCliente(cliente.codcliente!)" class="btn btn-delete">Excluir</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

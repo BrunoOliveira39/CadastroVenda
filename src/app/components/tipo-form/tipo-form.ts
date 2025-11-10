@@ -1,0 +1,56 @@
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Tipo, TipoService } from '../../services/tipo';
+ 
+@Component({ 
+  selector: 'app-tipo-form', 
+  standalone: true, 
+  imports: [CommonModule, FormsModule, RouterLink], 
+  templateUrl: './tipo-form.html', 
+  styleUrls: ['./tipo-form.scss'] 
+}) 
+export class TipoForm implements OnInit { 
+  tipo: Tipo = { nometipo: '' }; 
+  isEdit = false; 
+ 
+  constructor( 
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private tipoService: TipoService 
+  ) {} 
+ 
+  ngOnInit(): void { 
+    const id = this.route.snapshot.paramMap.get('id'); 
+    if (id) { 
+      this.isEdit = true; 
+      this.tipoService.getTipo(+id).subscribe( 
+        data => this.tipo = data, 
+        error => console.error('Erro ao carregar tipo', error) 
+      ); 
+    } 
+  } 
+ 
+  onSubmit(): void { 
+    if (this.isEdit) { 
+      //
+      this.tipoService.updateTipo(this.tipo.codtipo!, this.tipo).subscribe({
+        next: () => {
+          alert('Tipo atualizado com sucesso!'); // <-- ALERTA ADICIONADO
+          this.router.navigate(['/tipos']); //
+        },
+        error: (error) => console.error('Erro ao atualizar tipos', error) //
+      }); 
+    } else { 
+      //
+      this.tipoService.createTipo(this.tipo).subscribe({
+        next: () => {
+          alert('Tipo salvo com sucesso!'); // <-- ALERTA ADICIONADO
+          this.router.navigate(['/tipos']); //
+        },
+        error: (error) => console.error('Erro ao criar tipo', error) //
+      }); 
+    } 
+  }
+} 

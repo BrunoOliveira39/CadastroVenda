@@ -1,0 +1,37 @@
+<h2>Lista de Vendas</h2>
+<a routerLink="/vendas/novo" class="btn btn-primary">Nova Venda</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Cód. Venda</th>
+            <th>Data</th>
+            <th>Cliente</th>
+            <th>Itens</th>
+            <th>Valor Total</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let venda of vendas">
+            <td>{{ venda.codvenda }}</td>
+            <td>{{ venda.datavenda | date:'dd/MM/yyyy' }}</td>
+            <td>{{ venda.cliente?.nomecliente }}</td>
+            <td>
+                <ul>
+                    <li *ngFor="let item of venda.itens">
+                        {{ item.quantidadeVendida }}x {{ item.produto?.nomeproduto }}
+                    </li>
+                </ul>
+            </td>
+            <td>
+                {{ calcularTotalVenda(venda) | currency:'BRL' }}
+            </td>
+            <td>
+                <button (click)="deleteVenda(venda.codvenda!)" class="btn btn-delete">
+                    Cancelar Venda
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

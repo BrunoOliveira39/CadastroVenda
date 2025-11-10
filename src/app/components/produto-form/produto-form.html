@@ -1,0 +1,41 @@
+<h2>{{ isEdit ? 'Editar' : 'Novo' }} Produto</h2>
+
+<form (ngSubmit)="onSubmit()">
+    <div>
+        <label for="nomeproduto">Nome do Produto:</label>
+        <input type="text" id="nomeproduto" [(ngModel)]="produtoForm.nomeproduto" name="nomeproduto" required>
+    </div>
+    
+    <div>
+        <label for="valor">Valor:</label>
+        <input type="number" id="valor" [(ngModel)]="produtoForm.valor" name="valor" required>
+    </div>
+    
+    <div>
+        <label for="quantidade">Quantidade (Estoque):</label>
+        <input type="number" id="quantidade" [(ngModel)]="produtoForm.quantidade" name="quantidade" required>
+    </div>
+
+    <div>
+        <label for="marca">Marca:</label>
+        <select id="marca" [(ngModel)]="produtoForm.marca.codmarca" name="marca" required>
+            <option value="0" disabled>Selecione uma Marca</option>
+            <option *ngFor="let marca of marcas" [value]="marca.codmarca">
+                {{ marca.nomemarca }}
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <label for="tipo">Tipo:</label>
+        <select id="tipo" [(ngModel)]="produtoForm.tipo.codtipo" name="tipo" required>
+            <option value="0" disabled>Selecione um Tipo</option>
+            <option *ngFor="let tipo of tipos" [value]="tipo.codtipo">
+                {{ tipo.nometipo }}
+            </option>
+        </select>
+    </div>
+
+    <button type="submit">{{ isEdit ? 'Atualizar' : 'Salvar' }}</button>
+    <a routerLink="/produtos" class="btn btn-cancel">Cancelar</a>
+</form>

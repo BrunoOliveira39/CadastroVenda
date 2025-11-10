@@ -1,0 +1,34 @@
+/* Estilos para a navegação dentro da barra lateral escura */
+nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li a {
+  display: block; /* Faz o link ocupar toda a largura */
+  padding: 12px 15px;
+  text-decoration: none;
+  color: #ecf0f1; /* Cor de texto clara */
+  border-radius: 4px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background-color: #34495e; /* Tom sobre tom */
+  }
+
+  /* Estilo do link ativo (da sua rota e) */
+  &.active {
+    background-color: #3498db; /* Cor de destaque azul */
+    color: #ffffff;
+    font-weight: 700;
+  }
+}

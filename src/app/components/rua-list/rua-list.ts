@@ -1,0 +1,37 @@
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { Rua, RuaService } from '../../services/rua';
+ 
+@Component({ 
+  selector: 'app-rua-list', 
+  standalone: true, 
+  imports: [CommonModule, RouterLink], 
+  templateUrl: './rua-list.html', 
+  styleUrls: ['./rua-list.scss'] 
+}) 
+export class RuaList implements OnInit { 
+  ruas: Rua[] = []; 
+ 
+  constructor(private ruaService: RuaService) {} 
+ 
+  ngOnInit(): void { 
+    this.loadRuas(); 
+  } 
+ 
+  loadRuas(): void { 
+    this.ruaService.getRuas().subscribe( 
+      data => this.ruas = data, 
+      error => console.error('Erro ao carregar ruas', error) 
+    ); 
+  } 
+ 
+  deleteRua(id: number): void { 
+    if (confirm('Tem certeza que deseja excluir esta rua?')) { 
+      this.ruaService.deleteRua(id).subscribe( 
+        () => this.loadRuas(), 
+        error => console.error('Erro ao excluir rua', error) 
+      ); 
+    } 
+  } 
+}
